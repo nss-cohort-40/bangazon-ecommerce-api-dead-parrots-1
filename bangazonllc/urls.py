@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.urls import include, path
 from ecommerceapi.models import *
+from ecommerceapi.views import Products
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'products', Products, 'product')
 
 urlpatterns = [
     path('', include(router.urls)),
