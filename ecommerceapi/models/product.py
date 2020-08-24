@@ -1,6 +1,5 @@
+from .product_type import ProductType
 from django.db import models
-from django.db.models import F
-from django.db.models.signals import post_save
 from django.urls import reverse
 
 class Product(models.Model):
@@ -8,12 +7,12 @@ class Product(models.Model):
     title = models.CharField(max_length=50)
     customer_id = models.IntegerField()
     price = models.DecimalField(max_digits=20, decimal_places=2)
-    description = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
     quantity = models.IntegerField()
-    location = models.CharField(max_length=50)
-    image_path = models.CharField(max_length=50)
+    location = models.CharField(max_length=75)
+    image_path = models.CharField(max_length=255)
     created_at = models.DateTimeField()
-
+    product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING, related_name='products')
 
     class Meta:
         verbose_name = ("product")

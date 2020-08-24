@@ -10,7 +10,8 @@
             "quantity": 1,
             "location": "Spring Hill, TN",
             "image_path": "",
-            "created_at": "2020-08-24T15:34:24+00:00"
+            "created_at": "2020-08-24T15:34:24+00:00",
+            "product_type_id": 1
         }
     },
     {
@@ -24,7 +25,8 @@
             "quantity": 1,
             "location": "Nashville, TN",
             "image_path": "",
-            "created_at": "2020-09-5T15:34:24+00:00"
+            "created_at": "2020-09-5T15:34:24+00:00",
+            "product_type_id": 1
         }
     }
 ]

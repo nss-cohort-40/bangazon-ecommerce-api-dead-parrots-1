@@ -15,8 +15,17 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id','title', 'customer_id', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at')
+        depth = 1
 
 class Products(ViewSet):
+    def retrieve(self, request, pk=None):
+        try:
+            product = Products.objects.get(pk=pk)
+            serializer = ProductSerializer(product, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
+
     def list(self, request):
         products = Product.objects.all()
         serializer = ProductSerializer(
@@ -25,3 +34,5 @@ class Products(ViewSet):
             context={'request': request}
         )
         return Response(serializer.data)
+
+    
