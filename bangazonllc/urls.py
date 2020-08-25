@@ -19,13 +19,18 @@ from ecommerceapi.views import Products
 from ecommerceapi.views import ProductTypes
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
-from ecommerceapi.views import PaymentTypes, Customers, register_user, login_user
+from ecommerceapi.views import register_user
+from ecommerceapi.views import login_user
+from ecommerceapi.views import Customers
+from ecommerceapi.views import Users
+from ecommerceapi.views import PaymentTypes
+
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'products', Products, 'product')
 router.register(r'paymenttypes', PaymentTypes, 'paymenttype')
 router.register(r'customers', Customers, 'customers')
-
+router.register(r'users', Users, 'user')
 
 
 urlpatterns = [
