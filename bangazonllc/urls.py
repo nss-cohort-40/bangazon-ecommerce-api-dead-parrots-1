@@ -20,10 +20,14 @@ from ecommerceapi.views import register_user
 from ecommerceapi.views import login_user
 from ecommerceapi.views import Customers
 from ecommerceapi.views import Users
+from ecommerceapi.views import PaymentTypes
+
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'customers', Customers, 'customer')
+router.register(r'paymenttypes', PaymentTypes, 'paymenttype')
+router.register(r'customers', Customers, 'customers')
 router.register(r'users', Users, 'user')
+
 
 urlpatterns = [
     path('', include(router.urls)),

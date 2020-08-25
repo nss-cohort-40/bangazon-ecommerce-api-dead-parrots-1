@@ -23,7 +23,6 @@ class Users(ViewSet):
     def retrieve(self, request, pk=None):
         '''
         Handling a GET request for a customer/user
-
         Returns -- JSON serialized customer instance
         '''
         try:
@@ -37,7 +36,6 @@ class Users(ViewSet):
     def list(self, request):
         '''
         Handling a FETCH request for a customer/user
-
         Returns -- JSON serialized list of customer instances
         '''
         # user = User.objects.all()
@@ -65,7 +63,6 @@ class Customers(ViewSet):
     def update(self, request, pk=None):
         '''
         Handling a PUT request for a customer/user
-
         Returns -- Empty body with 204 status code
         '''
         customer = Customer.objects.get(pk=pk)
@@ -86,7 +83,6 @@ class Customers(ViewSet):
     def retrieve(self, request, pk=None):
         '''
         Handling a GET request for a customer/user
-
         Returns -- JSON serialized customer instance
         '''
         try:
@@ -99,11 +95,10 @@ class Customers(ViewSet):
     def list(self, request):
         '''
         Handling a FETCH request for a customer/user
-
         Returns -- JSON serialized list of customer instances
         '''
 
         # When user logs in, filter for their profile
         customer = Customer.objects.filter(user=request.auth.user)
         serializer = CustomerSerializer(customer, many=True, context={'request': request})
-        return Response(serializer.data)
+        return Response(serializer.data) 
