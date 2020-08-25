@@ -1,18 +1,19 @@
 from django.db import models
-from django.db.models import F
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
+from django.urls import reverse
 
 class Customer(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    address = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=100)
-
-    def __str__(self):
-        return "{} {}".format(self.first_name, self.last_name)
+    address = models.CharField(max_length=75)
+    phone_number = models.CharField(max_length=10)
 
     class Meta:
-        ordering = (F('user.date_joined').asc(nulls_last=True),)
+        verbose_name = ("customer")
+        verbose_name_plural = ("customers")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("customer_detail", kwargs={"pk": self.pk})
