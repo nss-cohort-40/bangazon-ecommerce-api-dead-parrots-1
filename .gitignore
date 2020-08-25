@@ -32,4 +32,3 @@ media/
 # django migrations
 migrations
 ecommerceAPI.session.sql
-ecommerceapi.session.sql
