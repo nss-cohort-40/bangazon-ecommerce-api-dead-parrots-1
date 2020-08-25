@@ -26,19 +26,6 @@ class CustomerSeralizer(serializers.HyperlinkedModelSerializer):
         depth = 2
 
 class Customers(ViewSet):
-    """Payment types for Bangazon customers"""
-
-    # def create(self, request):
-    #   """Handle POST opertations
-
-    #     Returns:
-    #         Response: JSON serialzied PaymentType instance
-    #   """
-
-    #   new_payment_type = PaymentType()
-    #   new_payment_type.merchant_name = request.data["merchant name"]
-    #   new_payment_type.acc
-
 
     def retrieve(self, request, pk=None):
         """Handle GET requests for single customer payment type
