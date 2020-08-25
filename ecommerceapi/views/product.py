@@ -20,19 +20,29 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 class Products(ViewSet):
     def retrieve(self, request, pk=None):
         try:
-            product = Products.objects.get(pk=pk)
+            product = Product.objects.get(pk=pk)
             serializer = ProductSerializer(product, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
 
+
     def list(self, request):
+        # order = self.request.query_params.get('order_by', None) # 'created_date'
+        # direction = self.request.query_params.get('direction', None) # 'desc'
+        search = self.request.query_params.get('search', None)
         products = Product.objects.all()
+
+        if search is not None:
+            products = products.filter(title=search)
+
         serializer = ProductSerializer(
             products, 
             many=True,
             context={'request': request}
         )
-        return Response(serializer.data)
-
     
+        return Response(serializer.data)
+    
+
+
