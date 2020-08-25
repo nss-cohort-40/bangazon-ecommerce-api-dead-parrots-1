@@ -1,3 +1,5 @@
 # from .payment_type import PaymentTypes
 from .product import Products
-from .product_type import ProductTypes
+from .payment_type import PaymentTypes
+from .customer import Customers
+from .register import register_user, login_user
