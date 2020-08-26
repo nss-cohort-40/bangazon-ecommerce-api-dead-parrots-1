@@ -14,6 +14,7 @@ class Product(models.Model):
     image_path = models.CharField(max_length=255)
     created_at = models.DateTimeField()
     product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING, related_name='products')
+    local_delivery = models.BooleanField()
 
     class Meta:
         verbose_name = ("product")
