@@ -21,7 +21,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 class Products(ViewSet):
     def retrieve(self, request, pk=None):
         try:
-            product = Products.objects.get(pk=pk)
+            product = Product.objects.get(pk=pk)
             serializer = ProductSerializer(product, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
