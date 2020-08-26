@@ -6,7 +6,7 @@ from django.urls import reverse
 class Product(models.Model):
 
     title = models.CharField(max_length=50)
-    customer_id = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name='customer')
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name='customers')
     price = models.DecimalField(max_digits=20, decimal_places=2)
     description = models.CharField(max_length=255)
     quantity = models.IntegerField()
@@ -24,4 +24,3 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse("Product_detail", kwargs={"pk": self.pk})
-

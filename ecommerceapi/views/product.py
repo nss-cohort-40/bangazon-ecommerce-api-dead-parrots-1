@@ -15,8 +15,8 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name='product',
             lookup_field='id'
         )
-        fields = ('id','title', 'customer_id', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'product_type')
-        depth = 1
+        fields = ('id','title', 'customer', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'product_type')
+        depth = 2
 
 class Products(ViewSet):
     def retrieve(self, request, pk=None):
@@ -35,9 +35,3 @@ class Products(ViewSet):
             context={'request': request}
         )
         return Response(serializer.data)
-
-    # @action(methods=['get'], detail=False)
-    # def categories(self, request):
-    #     categories = Product.objects.all()
-    #     serializer = ProductSerializer(categories, many=True, context={'request':request})
-    #     return Response(serializer.data)
