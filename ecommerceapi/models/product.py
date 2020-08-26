@@ -3,6 +3,9 @@ from .customer import Customer
 from django.db import models
 from django.urls import reverse
 
+def productFile(instance, filename):
+    return '/'.join(['products', filename])
+
 class Product(models.Model):
 
     title = models.CharField(max_length=50)
@@ -11,7 +14,7 @@ class Product(models.Model):
     description = models.CharField(max_length=255)
     quantity = models.IntegerField()
     location = models.CharField(max_length=75)
-    image_path = models.CharField(max_length=255)
+    image_path = models.ImageField(upload_to=productFile, max_length=254, blank=True, null=True, default=None)
     created_at = models.DateTimeField()
     product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING, related_name='products')
     local_delivery = models.BooleanField()

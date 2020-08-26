@@ -1,7 +1,7 @@
-from django.http import HttpResponseServerError
+from django.http import HttpResponseServerError 
 from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
+from rest_framework.response import Response 
 from rest_framework import serializers, status
 from ecommerceapi.models import Product, ProductType, Customer
 
@@ -31,6 +31,7 @@ class Products(ViewSet):
         newsell = Product()
         product_type = ProductType.objects.get(pk=request.data["product_type_id"])
         customer = Customer.objects.get(pk=request.data["customer_id"])
+        file = request.data["image_path"]
 
         newsell.product_type = product_type
         newsell.title = request.data["title"]
@@ -39,7 +40,7 @@ class Products(ViewSet):
         newsell.description = request.data["description"]
         newsell.quantity = request.data["quantity"]
         newsell.location = request.data["location"]
-        newsell.image_path = request.data["image_path"]
+        newsell.image_path = file
         newsell.created_at = request.data["created_at"]
         newsell.local_delivery = request.data["local_delivery"]
         newsell.save()
