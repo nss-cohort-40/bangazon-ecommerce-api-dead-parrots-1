@@ -38,7 +38,6 @@ class Users(ViewSet):
         Handling a FETCH request for a customer/user
         Returns -- JSON serialized list of customer instances
         '''
-        # user = User.objects.all()
         user = Customer.objects.filter(user=request.auth.user)
 
         serializer = UserSerializer(
