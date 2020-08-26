@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from ecommerceapi.models import Product, ProductType
+from ecommerceapi.models import Product, ProductType, Customer
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for products
@@ -29,11 +29,12 @@ class Products(ViewSet):
     
     def create(self, request):
         newsell = Product()
-        product_type = ProductType.objects.get(pk=request.data["producttype_id"])
+        product_type = ProductType.objects.get(pk=request.data["product_type_id"])
+        customer = Customer.objects.get(pk=request.data["customer_id"])
 
         newsell.product_type = product_type
         newsell.title = request.data["title"]
-        newsell.customer_id = request.data["customer_id"]
+        newsell.customer = customer
         newsell.price = request.data["price"]
         newsell.description = request.data["description"]
         newsell.quantity = request.data["quantity"]
