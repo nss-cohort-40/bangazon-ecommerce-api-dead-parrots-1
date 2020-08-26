@@ -13,7 +13,7 @@ class Customer(models.Model):
         verbose_name_plural = ("customers")
 
     def __str__(self):
-        return self.name
+        return self.address
 
     def get_absolute_url(self):
         return reverse("customer_detail", kwargs={"pk": self.pk})
