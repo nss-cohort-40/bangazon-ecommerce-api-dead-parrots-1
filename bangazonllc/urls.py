@@ -29,7 +29,7 @@ from ecommerceapi.views import PaymentTypes
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'products', Products, 'product')
 router.register(r'paymenttypes', PaymentTypes, 'paymenttype')
-router.register(r'customers', Customers, 'customers')
+router.register(r'customers', Customers, 'customer')
 router.register(r'users', Users, 'user')
 
 

@@ -1,11 +1,12 @@
 from .product_type import ProductType
+from .customer import Customer
 from django.db import models
 from django.urls import reverse
 
 class Product(models.Model):
 
     title = models.CharField(max_length=50)
-    customer_id = models.IntegerField()
+    customer_id = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name='customer')
     price = models.DecimalField(max_digits=20, decimal_places=2)
     description = models.CharField(max_length=255)
     quantity = models.IntegerField()
