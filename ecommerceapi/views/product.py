@@ -15,7 +15,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name='product',
             lookup_field='id'
         )
-        fields = ('id','title', 'customer', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'product_type')
+        fields = ('id','title', 'customer', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'product_type', 'local_delivery')
         depth = 2
 
 class Products(ViewSet):
@@ -41,6 +41,7 @@ class Products(ViewSet):
         newsell.location = request.data["location"]
         newsell.image_path = request.data["image_path"]
         newsell.created_at = request.data["created_at"]
+        newsell.local_delivery = request.data["local_delivery"]
         newsell.save()
 
         serializer = ProductSerializer(newsell, context={'request': request})
@@ -67,11 +68,15 @@ class Products(ViewSet):
 
 
     def list(self, request):
-        # order = self.request.query_params.get('order_by', None) # 'created_date'
-        # direction = self.request.query_params.get('direction', None) # 'desc'
         search = self.request.query_params.get('search', None)
+        quantity = self.request.query_params.get('quantity', None)
         products = Product.objects.all()
 
+        if quantity is not None:
+            try:
+                products = products.order_by("created_at")[:int(quantity)]
+            except ValueError:
+                products = products.objects.all()
         if search is not None:
             products = products.filter(title=search)
 
