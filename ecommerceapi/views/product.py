@@ -53,8 +53,14 @@ class Products(ViewSet):
         # order = self.request.query_params.get('order_by', None) # 'created_date'
         # direction = self.request.query_params.get('direction', None) # 'desc'
         search = self.request.query_params.get('search', None)
+        quantity = self.request.query_params.get('quantity', None)
         products = Product.objects.all()
 
+        if quantity is not None:
+            try:
+                products = products.order_by("created_at")[:int(quantity)]
+            except ValueError:
+                products = products.objects.all()
         if search is not None:
             products = products.filter(title=search)
 
