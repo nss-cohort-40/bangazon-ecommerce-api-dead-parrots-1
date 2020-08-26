@@ -41,6 +41,7 @@ class Products(ViewSet):
         newsell.location = request.data["location"]
         newsell.image_path = request.data["image_path"]
         newsell.created_at = request.data["created_at"]
+        newsell.local_delivery = request.data["local_delivery"]
         newsell.save()
 
         serializer = ProductSerializer(newsell, context={'request': request})
@@ -50,8 +51,6 @@ class Products(ViewSet):
 
 
     def list(self, request):
-        # order = self.request.query_params.get('order_by', None) # 'created_date'
-        # direction = self.request.query_params.get('direction', None) # 'desc'
         search = self.request.query_params.get('search', None)
         quantity = self.request.query_params.get('quantity', None)
         products = Product.objects.all()
