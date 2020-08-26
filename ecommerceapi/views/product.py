@@ -48,11 +48,20 @@ class Products(ViewSet):
         return Response(serializer.data)
         
 
+
     def list(self, request):
+        # order = self.request.query_params.get('order_by', None) # 'created_date'
+        # direction = self.request.query_params.get('direction', None) # 'desc'
+        search = self.request.query_params.get('search', None)
         products = Product.objects.all()
+
+        if search is not None:
+            products = products.filter(title=search)
+
         serializer = ProductSerializer(
             products, 
             many=True,
             context={'request': request}
         )
+        
         return Response(serializer.data)
