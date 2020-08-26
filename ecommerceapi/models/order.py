@@ -6,7 +6,7 @@ from .payment_type import PaymentType
 class Order(models.Model):
 
     """model for building out tables for bangazon payment types"""
-    customer = models.ForeignKey(Customer, related_name=("customers"), on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, related_name=("customer_order"), on_delete=models.DO_NOTHING)
     payment_type = models.ForeignKey(PaymentType, related_name=("payment_type"), on_delete=models.DO_NOTHING)
     products = models.ManyToManyField("Product", through=("OrderProduct"))
     created_at = models.DateField()

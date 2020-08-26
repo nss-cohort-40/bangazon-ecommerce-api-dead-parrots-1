@@ -1,6 +1,4 @@
 from django.db import models
-from datetime import date
-
 class OrderProduct(models.Model):
 
   """"Creates join table for the many to many realtionship between products and orders"""
