@@ -6,7 +6,6 @@ from rest_framework import serializers
 from rest_framework import status
 from ecommerceapi.models import PaymentType, Customer, Order
 
-
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for payment types
 
