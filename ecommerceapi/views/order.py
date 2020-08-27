@@ -25,7 +25,6 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         depth = 2
 
 
-
 class Orders(ViewSet):
     """Orders for Bangazon customers"""
 
@@ -37,11 +36,27 @@ class Orders(ViewSet):
         order.payment_type_id = request.data["payment_type_id"]
         order.created_at = order.created_at
         order.save()
-
+        new_order = Order.objects.create(customer_id = customer.id, payment_type_id = None)
         serializer = OrderSerializer(order, context={'request': request})
 
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
+
+    def destroy(self, request, pk=None):
+
+        customer = Customer.objects.get(user=request.auth.user)
+
+        try:
+            order = Order.objects.get(pk=pk)
+            order.delete()
+            new_order = Order.objects.create(customer_id = customer.id, payment_type_id = None)
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except Order.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def retrieve(self, request, pk=None):
         """Handle GET requests for single customer payment type
