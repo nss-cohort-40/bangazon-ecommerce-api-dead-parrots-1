@@ -29,8 +29,6 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 class Orders(ViewSet):
     """Orders for Bangazon customers"""
 
-
-
     def update(self, request, pk=None):
 
         customer = Customer.objects.get(user=request.auth.user)
