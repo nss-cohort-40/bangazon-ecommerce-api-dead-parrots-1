@@ -34,11 +34,13 @@ class Orders(ViewSet):
         customer = Customer.objects.get(user=request.auth.user)
         order = Order.objects.get(pk=pk)
         order.customer = customer
-        order.payment_type = request.data["payment_type"]
+        order.payment_type_id = request.data["payment_type_id"]
         order.created_at = order.created_at
         order.save()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        serializer = OrderSerializer(order, context={'request': request})
+
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
 
     # def patch(self, request, pk=None):
