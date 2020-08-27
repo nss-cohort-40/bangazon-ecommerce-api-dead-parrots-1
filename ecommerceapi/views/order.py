@@ -29,6 +29,32 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 class Orders(ViewSet):
     """Orders for Bangazon customers"""
 
+
+
+    def update(self, request, pk=None):
+
+        customer = Customer.objects.get(user=request.auth.user)
+        order = Order.objects.get(pk=pk)
+        payment_type = request.data["payment_type"]
+        created_at = order.created_at
+        order.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+
+    # def patch(self, request, pk=None):
+
+    #     customer = Customer.objects.get(user=request.auth.user)
+    #     try:
+    #       order = Order.objects.get(pk=pk)
+    #       serializer = OrderSerializer(order, data=request.data, partial=True)
+    #       if serializer.is_valid():
+    #           serializer.save()
+    #           return Response({}, status=status.HTTP_204_NO_CONTENT)
+    #     except Exception as ex:
+    #         return HttpResponseServerError(ex)
+
+
     def retrieve(self, request, pk=None):
         """Handle GET requests for single customer payment type
         

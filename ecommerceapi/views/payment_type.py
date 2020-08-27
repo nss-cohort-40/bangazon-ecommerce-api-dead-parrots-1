@@ -23,7 +23,7 @@ class PaymentTypeSeralizer(serializers.HyperlinkedModelSerializer):
         )
         fields = (
           'id', 'url', 'merchant_name', 'account_number',
-          'expiration_date', 'customer_id', 'created_at'
+          'expiration_date', 'customer', 'created_at'
         )
         depth = 2
 

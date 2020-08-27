@@ -9,6 +9,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for products
 
     """
+
     class Meta: 
         model = Product
         url = serializers.HyperlinkedIdentityField(
@@ -30,7 +31,7 @@ class Products(ViewSet):
     def create(self, request):
         newsell = Product()
         product_type = ProductType.objects.get(pk=request.data["product_type_id"])
-        seller = Customer.objects.get(pk=request.data["customer_id"])
+        seller = Customer.objects.get(pk=request.data["seller"])
         file = request.data["image_path"]
 
         newsell.product_type = product_type
