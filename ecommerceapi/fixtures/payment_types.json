@@ -1,6 +1,6 @@
 [
   {
-      "model": "ecommerceapi.paymenttypes",
+      "model": "ecommerceapi.paymenttype",
       "pk": 1,
       "fields": {
           "merchant_name": "Visa",
@@ -11,7 +11,7 @@
       }
   },
   {
-    "model": "ecommerceapi.paymenttypes",
+    "model": "ecommerceapi.paymenttype",
     "pk": 2,
     "fields": {
         "merchant_name": "American Express",
