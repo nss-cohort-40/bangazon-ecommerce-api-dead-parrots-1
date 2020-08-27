@@ -4,7 +4,7 @@ from django.db import models
 from django.urls import reverse
 
 def productFile(instance, filename):
-    return '/'.join(['products', filename])
+    return '/'.join(['productimg', filename])
 
 class Product(models.Model):
 
