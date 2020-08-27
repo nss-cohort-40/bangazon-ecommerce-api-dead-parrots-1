@@ -7,7 +7,6 @@ from ..models import OrderProduct
 from ..models import Customer
 from ..models import Order
 from .order import OrderSerializer
-from .product import ProductSerializer
 
 class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
     
