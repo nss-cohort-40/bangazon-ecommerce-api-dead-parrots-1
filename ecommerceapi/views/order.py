@@ -43,19 +43,6 @@ class Orders(ViewSet):
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
 
-    # def patch(self, request, pk=None):
-
-    #     customer = Customer.objects.get(user=request.auth.user)
-    #     try:
-    #       order = Order.objects.get(pk=pk)
-    #       serializer = OrderSerializer(order, data=request.data, partial=True)
-    #       if serializer.is_valid():
-    #           serializer.save()
-    #           return Response({}, status=status.HTTP_204_NO_CONTENT)
-    #     except Exception as ex:
-    #         return HttpResponseServerError(ex)
-
-
     def retrieve(self, request, pk=None):
         """Handle GET requests for single customer payment type
         
