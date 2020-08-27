@@ -22,6 +22,21 @@ class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
         depth = 2
 
 class OrderProducts(ViewSet):
+
+    def create(self, request):
+        customer = Customer.objects.get(user=request.auth.user)
+        order = Order.objects.get(customer_id=customer.id, payment_type_id=None)
+
+
+        neworder_product = OrderProduct()
+        neworder_product.order_id = order.id
+        neworder_product.product_id = request.data["product_id"]
+
+        neworder_product.save()
+
+        serializer = OrderProductSerializer(neworder_product, context={'request': request})
+
+        return Response(serializer.data)
     
     def retrieve(self, request, pk=None):
         try:
