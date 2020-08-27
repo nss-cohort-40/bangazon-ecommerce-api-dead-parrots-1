@@ -15,7 +15,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name='product',
             lookup_field='id'
         )
-        fields = ('id', 'title', 'customer', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'product_type', 'local_delivery')
+        fields = ('id', 'title', 'seller', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'product_type', 'local_delivery')
         depth = 2
 
 class Products(ViewSet):
@@ -30,12 +30,12 @@ class Products(ViewSet):
     def create(self, request):
         newsell = Product()
         product_type = ProductType.objects.get(pk=request.data["product_type_id"])
-        customer = Customer.objects.get(pk=request.data["customer_id"])
+        seller = Customer.objects.get(pk=request.data["customer_id"])
         file = request.data["image_path"]
 
         newsell.product_type = product_type
         newsell.title = request.data["title"]
-        newsell.customer = customer
+        newsell.seller = seller
         newsell.price = request.data["price"]
         newsell.description = request.data["description"]
         newsell.quantity = request.data["quantity"]

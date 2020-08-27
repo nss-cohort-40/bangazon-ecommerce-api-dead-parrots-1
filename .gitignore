@@ -32,3 +32,4 @@ media/
 # django migrations
 migrations
 ecommerceAPI.session.sql
+productimg
