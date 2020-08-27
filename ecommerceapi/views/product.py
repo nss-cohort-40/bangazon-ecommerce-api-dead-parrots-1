@@ -9,6 +9,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for products
 
     """
+
     class Meta: 
         model = Product
         url = serializers.HyperlinkedIdentityField(
