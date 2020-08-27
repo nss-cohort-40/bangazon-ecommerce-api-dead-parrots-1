@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
-from ecommerceapi.models import Customer
+from ecommerceapi.models import Customer, Order
 import json
 
 @csrf_exempt
@@ -45,7 +45,8 @@ def register_user(request):
         user = new_user
     )
 
-    new_customer.save()
+    order = Order.objects.create(customer_id = new_customer.id, payment_type_id = None)
+
     token = Token.objects.create(user=new_user)
     data = json.dumps({"token": token.key})
     return HttpResponse(data, content_type='application/json')
