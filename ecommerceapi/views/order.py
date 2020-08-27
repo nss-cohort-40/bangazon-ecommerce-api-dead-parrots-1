@@ -31,17 +31,16 @@ class Orders(ViewSet):
     """Orders for Bangazon customers"""
 
     def retrieve(self, request, pk=None):
-       pass
-        # """Handle GET requests for single customer payment type
+        """Handle GET requests for single customer payment type
         
-        #   Returns: JSON serialized payment type instance
-        # """
-        # try:
-        #     order = Order.objects.get(pk=pk)
-        #     serializer = OrderSerializer(order, context={'request': request})
-        #     return Response(serializer.data)
-        # except Exception as ex:
-        #     return HttpResponseServerError(ex)
+          Returns: JSON serialized payment type instance
+        """
+        try:
+            order = Order.objects.get(pk=pk)
+            serializer = OrderSerializer(order, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
 
     def list(self, request):
         """Handle GET requests to orders
@@ -57,4 +56,5 @@ class Orders(ViewSet):
           many=True,
           context={'request': request}
         )
+
         return Response(serializer.data)
