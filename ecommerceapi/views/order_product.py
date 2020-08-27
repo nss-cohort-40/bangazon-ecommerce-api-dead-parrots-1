@@ -31,6 +31,20 @@ class OrderProducts(ViewSet):
         except Exception as ex:
             return HttpResponseServerError(ex)
 
+    def destroy(self, request, pk=None):
+
+        try:
+            order_product = OrderProduct.objects.get(pk=pk)
+            order_product.delete()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except OrderProduct.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     def list(self, request):
 
         customer = Customer.objects.get(user=request.auth.user)
