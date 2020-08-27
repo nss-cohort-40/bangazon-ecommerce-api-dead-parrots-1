@@ -35,8 +35,9 @@ class Orders(ViewSet):
 
         customer = Customer.objects.get(user=request.auth.user)
         order = Order.objects.get(pk=pk)
-        payment_type = request.data["payment_type"]
-        created_at = order.created_at
+        order.customer = customer
+        order.payment_type = request.data["payment_type"]
+        order.created_at = order.created_at
         order.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
