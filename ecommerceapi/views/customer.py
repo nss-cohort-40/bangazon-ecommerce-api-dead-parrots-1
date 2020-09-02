@@ -28,7 +28,7 @@ class Users(ViewSet):
         try:
             user = User.objects.get(pk=pk)
             serializer = UserSerializer(user,
-            context = {'request': request})
+                                        context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
@@ -41,7 +41,7 @@ class Users(ViewSet):
         user = Customer.objects.filter(user=request.auth.user)
 
         serializer = UserSerializer(
-            user, many = True, context={'request':request})
+            user, many=True, context={'request': request})
 
         return Response(serializer.data)
 
@@ -51,8 +51,8 @@ class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Customer
         url = serializers.HyperlinkedIdentityField(
-            view_name = 'customer',
-            lookup_field = 'id'
+            view_name='customer',
+            lookup_field='id'
         )
         fields = ('id', 'url', 'user', 'address', 'phone_number')
         depth = 2
@@ -85,8 +85,9 @@ class Customers(ViewSet):
         Returns -- JSON serialized customer instance
         '''
         try:
-            customer = Customer.objects.get(pk=pk)
-            serializer = CustomerSerializer(customer, context={'request': request})
+            customer = Customer.objects.get(user=request.user.id)
+            serializer = CustomerSerializer(
+                customer, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
@@ -99,5 +100,6 @@ class Customers(ViewSet):
 
         # When user logs in, filter for their profile
         customer = Customer.objects.filter(user=request.auth.user)
-        serializer = CustomerSerializer(customer, many=True, context={'request': request})
-        return Response(serializer.data) 
+        serializer = CustomerSerializer(
+            customer, many=True, context={'request': request})
+        return Response(serializer.data)
