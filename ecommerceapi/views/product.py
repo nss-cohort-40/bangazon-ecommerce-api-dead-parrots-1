@@ -1,37 +1,42 @@
-from django.http import HttpResponseServerError 
+from django.http import HttpResponseServerError
 from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response 
+from rest_framework.response import Response
 from rest_framework import serializers, status
 from ecommerceapi.models import Product, ProductType, Customer
+
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for products
 
     """
 
-    class Meta: 
+    class Meta:
         model = Product
         url = serializers.HyperlinkedIdentityField(
             view_name='product',
             lookup_field='id'
         )
-        fields = ('id', 'title', 'seller', 'price', 'description', 'quantity', 'location', 'image_path', 'created_at', 'product_type', 'local_delivery')
+        fields = ('id', 'title', 'seller', 'price', 'description', 'quantity',
+                  'location', 'image_path', 'created_at', 'product_type', 'local_delivery')
         depth = 2
+
 
 class Products(ViewSet):
     def retrieve(self, request, pk=None):
         try:
             product = Product.objects.get(pk=pk)
-            serializer = ProductSerializer(product, context={'request': request})
+            serializer = ProductSerializer(
+                product, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
-    
+
     def create(self, request):
         newsell = Product()
-        product_type = ProductType.objects.get(pk=request.data["product_type_id"])
-        seller = Customer.objects.get(pk=request.data["seller"])
+        product_type = ProductType.objects.get(
+            pk=request.data["product_type_id"])
+        seller = Customer.objects.get(user_id=request.user.id)
         file = request.data["image_path"]
 
         newsell.product_type = product_type
@@ -49,7 +54,7 @@ class Products(ViewSet):
         serializer = ProductSerializer(newsell, context={'request': request})
 
         return Response(serializer.data)
-        
+
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single park area
 
@@ -68,7 +73,6 @@ class Products(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
     def list(self, request):
         search = self.request.query_params.get('search', None)
         quantity = self.request.query_params.get('quantity', None)
@@ -83,9 +87,9 @@ class Products(ViewSet):
             products = products.filter(title=search)
 
         serializer = ProductSerializer(
-            products, 
+            products,
             many=True,
             context={'request': request}
         )
-        
+
         return Response(serializer.data)
