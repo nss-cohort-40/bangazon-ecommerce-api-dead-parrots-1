@@ -30,10 +30,9 @@ class OrderProducts(ViewSet):
         product = Product.objects.get(pk=request.data["product_id"])
         product.quantity -= 1
         product.save()
-        customer = Customer.objects.get(pk=pk)
         neworder_product = OrderProduct()
         neworder_product.order_id = order.id
-        neworder_product.product_id = request.data["product_id"]
+        neworder_product.product_id = product.id
 
         neworder_product.save()
 
