@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "payment_type_id": null,
-            "customer_id": 3,
+            "customer_id": 2,
             "created_at": "2015-04-13"
         }
     },
@@ -12,8 +12,8 @@
         "model": "ecommerceapi.order",
         "pk": 2,
         "fields": {
-            "payment_type_id": 1,
-            "customer_id": 3,
+            "payment_type_id": null,
+            "customer_id": 2,
             "created_at": "2015-04-13"
         }
     }
