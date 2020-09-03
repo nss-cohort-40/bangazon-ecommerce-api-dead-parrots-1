@@ -6,6 +6,7 @@ from rest_framework import status
 from ..models import OrderProduct
 from ..models import Customer
 from ..models import Order
+from ..models import Product
 from .order import OrderSerializer
 
 class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,11 +27,12 @@ class OrderProducts(ViewSet):
     def create(self, request):
         customer = Customer.objects.get(user=request.auth.user)
         order = Order.objects.get(customer_id=customer.id, payment_type_id=None)
-
-
+        product = Product.objects.get(pk=request.data["product_id"])
+        product.quantity -= 1
+        product.save()
         neworder_product = OrderProduct()
         neworder_product.order_id = order.id
-        neworder_product.product_id = request.data["product_id"]
+        neworder_product.product_id = product.id
 
         neworder_product.save()
 
