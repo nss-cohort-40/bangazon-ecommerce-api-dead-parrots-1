@@ -74,7 +74,8 @@ class Products(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def list(self, request):
-        search = self.request.query_params.get('search', None)
+        # search = self.request.query_params.get('search', None)
+        title = self.request.query_params.get('title', None)
         quantity = self.request.query_params.get('quantity', None)
         products = Product.objects.all()
 
@@ -83,8 +84,8 @@ class Products(ViewSet):
                 products = products.order_by("created_at")[:int(quantity)]
             except ValueError:
                 products = products.objects.all()
-        if search is not None:
-            products = products.filter(title=search)
+        if title is not None:
+            products = products.filter(title__startswith=title)
 
         serializer = ProductSerializer(
             products,
