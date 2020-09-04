@@ -15,7 +15,7 @@ class Product(models.Model):
     quantity = models.IntegerField()
     location = models.CharField(max_length=75)
     image_path = models.ImageField(upload_to=productFile, max_length=254, blank=True, null=True, default=None)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING, related_name='products')
     local_delivery = models.BooleanField()
 

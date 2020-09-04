@@ -1,5 +1,6 @@
 import json
 from rest_framework import status
+from unittest import skip
 from django.test import TestCase
 from django.urls import reverse
 from ecommerceapi.models import Product, ProductType, Customer
@@ -76,8 +77,34 @@ class TestProduct(TestCase):
         # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
         self.assertIn(new_product.title.encode(), response.content)
 
-    def test_delete_product(self, pk):
+    def test_delete_product(self):
         
+        new_product = Product.objects.create(
+          title="drill",
+          price=100,
+          description="drills stuff",
+          quantity=100,
+          location="Nashville",
+          image_path="image.png",
+          product_type_id=self.product_type.id,
+          local_delivery=False,
+          seller_id=1
+        )
+
+        response = self.client.get(reverse('product-list'))
+
+        self.assertEqual(response.data[0]["title"], "drill")
+
+        url = reverse('product-detail', kwargs={'pk': new_product.id})
+        self.client.delete(url, HTTP_AUTHORIZATION='Token ' + str(self.token)) 
+
+        response = self.client.get(reverse('product-list'))
+
+        self.assertEqual(Product.objects.count(), 0)
+
+    @skip('donno')
+    def test_update_product(self):
+
         new_product = Product.objects.create(
           title="drill",
           price=100,
@@ -91,14 +118,21 @@ class TestProduct(TestCase):
           seller_id=1
         )
 
-        response = self.client.get(reverse('product-list'))
-
-        self.assertEqual(response.status_code, 200)
-
-        # response.data is the python serialized data used to render the JSON, while response.content is the JSON itself.
-        # Are we responding with the data we asked for? There's just one parkarea in our dummy db, so it should contain a list with one instance in it
-        self.assertEqual(len(response.data), 1)
-
-        self.client.delete(reverse('product-list'), pk=1, content_type='application/json')
-
-        self.assertEqual(Product.objects.count(), 0)
+        updated_product = {
+          "title":"drill",
+          "price":100,
+          "description":"drills stuff",
+          "quantity":200,
+          "location":"Nashville",
+          "image_path":"image.png",
+          "created_at":"2020-09-03 19:38:59.746000",
+          "product_type_id":self.product_type.id,
+          "local_delivery":False,
+          "seller_id":1
+        }
+        
+        response = self.client.put(reverse('product-list'),
+            data=json.dumps(updated_product),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
