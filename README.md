@@ -39,6 +39,6 @@ Should you choose leverage this API for your own front-end application, please r
 - Get all products in the database:
     - http://localhost:8000/products
 
-## Erd
+## ERD
 
 ![](https://i.imgur.com/EntdGBz.png)
