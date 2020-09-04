@@ -23,6 +23,16 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class Products(ViewSet):
+
+    def update(self, request, pk=None):
+
+        product = Product.objects.get(pk=request.data["product_id"])
+        product.quantity += 1
+        product.save()
+        serializer = ProductSerializer(product, context={'request': request})
+
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
     def retrieve(self, request, pk=None):
         try:
             product = Product.objects.get(pk=pk)
