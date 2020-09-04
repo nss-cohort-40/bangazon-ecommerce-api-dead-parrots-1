@@ -81,7 +81,7 @@ class Orders(ViewSet):
         orders = Order.objects.filter(customer_id=customer.id, payment_type_id=None)
 
         if history is not None:
-          orders = Order.objects.filter(customer_id=customer.id, payment_type_id=True)
+          orders = Order.objects.filter(customer_id=customer.id)
 
         serializer = OrderSerializer(
           orders,

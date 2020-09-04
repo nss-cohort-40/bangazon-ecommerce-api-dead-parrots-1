@@ -66,6 +66,10 @@ class OrderProducts(ViewSet):
 
         customer = Customer.objects.get(user=request.auth.user)
         order = Order.objects.get(customer_id=customer.id, payment_type_id=None)
+        order_history = self.request.query_params.get('order_history', None)
+
+        if order_history is not None:
+            order = Order.objects.get(pk=order_history)
 
         order_products = OrderProduct.objects.filter(order_id=order.id)
 
