@@ -41,4 +41,4 @@ Should you choose leverage this API for your own front-end application, please r
 
 ## Erd
 
-* (https://i.imgur.com/EntdGBz.png)
+![](https://i.imgur.com/EntdGBz.png)
