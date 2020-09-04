@@ -47,7 +47,6 @@ class Products(ViewSet):
         product_type = ProductType.objects.get(
             pk=request.data["product_type_id"])
         seller = Customer.objects.get(user_id=request.user.id)
-        file = request.data["image_path"]
 
         newsell.product_type = product_type
         newsell.title = request.data["title"]
@@ -56,7 +55,7 @@ class Products(ViewSet):
         newsell.description = request.data["description"]
         newsell.quantity = request.data["quantity"]
         newsell.location = request.data["location"]
-        newsell.image_path = file
+        newsell.image_path = request.data["image_path"]
         newsell.created_at = request.data["created_at"]
         newsell.local_delivery = request.data["local_delivery"]
         newsell.save()
